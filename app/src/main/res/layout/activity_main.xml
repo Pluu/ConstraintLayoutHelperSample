@@ -26,22 +26,46 @@
         android:layout_marginTop="20dp">
 
         <TextView
-            android:id="@+id/firstView"
+            android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="First"
-            android:textSize="30sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="Text1"
+            android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/secondView"
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            android:text="No Accessibility" />
+
+        <EditText
+            android:id="@+id/editView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Hint ABCDEF" />
+
+        <EditText
+            android:id="@+id/editView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="QWERTY"
+            android:text="EditText 1234" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="ZZZ"
+            android:text="ZZZ로 읽음"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Second"
-            android:textSize="20sp"
-            app:layout_constraintBaseline_toBaselineOf="@id/firstView"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/firstView2"
@@ -51,7 +75,7 @@
             android:text="First"
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/firstView" />
+            app:layout_constraintTop_toBottomOf="@id/flowLayout" />
 
         <TextView
             android:id="@+id/secondView2"
@@ -62,14 +86,27 @@
             app:layout_constraintBaseline_toBaselineOf="@id/firstView2"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flowLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="textView1,textView2,editView,editView2,textView3,button"
+            app:flow_horizontalBias="0"
+            app:flow_horizontalGap="12dp"
+            app:flow_horizontalStyle="packed"
+            app:flow_wrapMode="chain"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.pluu.constraintlayouthelper.ConstraintLayoutAccessibilityHelper
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:constraint_referenced_ids="firstView,secondView"
-            app:layout_constraintBottom_toBottomOf="@id/firstView"
+            app:constraint_referenced_ids="textView1,editView,editView2,textView3"
+            app:layout_constraintBottom_toBottomOf="@id/flowLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/firstView" />
+            app:layout_constraintTop_toTopOf="@id/textView1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintHelper
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.AccessibilityDelegateCompat
@@ -46,11 +45,17 @@ class ConstraintLayoutAccessibilityHelper @JvmOverloads constructor(
         private fun generateText(parent: ViewGroup): CharSequence {
             return mIds.asSequence()
                 .mapNotNull { id -> parent.findViewById(id) }
-                .mapNotNull { view ->
-                    when {
-                        view.contentDescription?.isNotEmpty() == true -> view.contentDescription
-                        view is TextView -> view.text.takeIf { it.isNotEmpty() }
-                        else -> ""
+                .map { view ->
+                    val childInfo = AccessibilityNodeInfoCompat.obtain()
+                    ViewCompat.onInitializeAccessibilityNodeInfo(view, childInfo)
+                    val text = childInfo.contentDescription?.takeIf {
+                        it.isNotEmpty()
+                    } ?: childInfo.text
+
+                    if (childInfo.roleDescription != null) {
+                        "${text}, ${childInfo.roleDescription}"
+                    } else {
+                        text.toString()
                     }
                 }.joinToString(", ")
         }
