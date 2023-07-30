@@ -45,7 +45,7 @@ class ConstraintLayoutAccessibilityHelper @JvmOverloads constructor(
         private fun generateText(parent: ViewGroup): CharSequence {
             return mIds.asSequence()
                 .mapNotNull { id -> parent.findViewById(id) }
-                .map { view ->
+                .flatMap { view ->
                     val childInfo = AccessibilityNodeInfoCompat.obtain()
                     ViewCompat.onInitializeAccessibilityNodeInfo(view, childInfo)
                     val text = childInfo.contentDescription?.takeIf {
@@ -53,9 +53,9 @@ class ConstraintLayoutAccessibilityHelper @JvmOverloads constructor(
                     } ?: childInfo.text
 
                     if (childInfo.roleDescription != null) {
-                        "${text}, ${childInfo.roleDescription}"
+                        sequenceOf(text, childInfo.roleDescription)
                     } else {
-                        text.toString()
+                        sequenceOf(text)
                     }
                 }.joinToString(", ")
         }
